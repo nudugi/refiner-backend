@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: refiner-backend
+    env: python
+    buildCommand: ""
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: OPENAI_API_KEY
+        value: ${OPENAI_API_KEY}
+    plan: free
