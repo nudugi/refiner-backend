@@ -1,16 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from openai import OpenAI
-from dotenv import load_dotenv
 import os
 
-# 환경변수 로드
-load_dotenv()
+# OpenAI 클라이언트 설정
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# OpenAI 클라이언트
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-# Flask 앱 설정
 app = Flask(__name__)
 CORS(app)
 
@@ -62,7 +57,6 @@ def refine_text():
 
             content = response.choices[0].message.content.strip()
 
-            # 간단한 파싱
             artist_note = content.split("작가노트:")[1].split("전시 서문:")[0].strip() if "작가노트:" in content else ""
             exhibition_preface = content.split("전시 서문:")[1].split("작품 설명:")[0].strip() if "전시 서문:" in content else ""
             work_explanation = content.split("작품 설명:")[1].strip() if "작품 설명:" in content else ""
