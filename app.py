@@ -101,3 +101,27 @@ def refine_text():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+import requests
+
+@app.route("/api/payment/confirm", methods=["POST"])
+def confirm_payment():
+    data = request.json
+    paymentKey = data.get("paymentKey")
+    orderId = data.get("orderId")
+    amount = data.get("amount")
+
+    url = "https://api.tosspayments.com/v1/payments/confirm"
+    headers = {"Authorization": f"Basic {TOSS_SECRET_KEY}"}
+    payload = {
+        "paymentKey": paymentKey,
+        "orderId": orderId,
+        "amount": amount
+    }
+
+    try:
+        res = requests.post(url, json=payload, headers=headers)
+        return jsonify(res.json())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
