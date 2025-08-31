@@ -125,3 +125,12 @@ def confirm_payment():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/payment/success')
+def payment_success():
+    # 성공 처리: DB 저장, 로그 기록 등
+    return "결제 성공! 여기서 필요한 후처리 가능"
+
+@app.route('/api/payment/fail')
+def payment_fail():
+    # 실패 처리
+    return "결제 실패! 필요한 후처리 가능"
