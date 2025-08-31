@@ -4,3 +4,4 @@ python-dotenv
 openai
 flask_sqlalchemy
 bcrypt
+requests
